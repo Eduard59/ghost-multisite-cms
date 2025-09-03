@@ -1,7 +1,9 @@
 FROM ghost:5-alpine
 
-# Install PostgreSQL client library
-RUN npm install pg
+# Install SQLite3 and create data directory
+RUN apk add --no-cache sqlite \
+    && mkdir -p /var/data \
+    && chown -R node:node /var/data
 
 # Copy custom configuration
 COPY config.production.json /var/lib/ghost/config.production.json
@@ -22,8 +24,5 @@ EXPOSE 2368
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s \
   CMD node /var/lib/ghost/current/index.js health
 
-# Add startup script
-RUN echo '#!/bin/sh\nsleep 5\nnode --max-old-space-size=256 current/index.js' > /start.sh && chmod +x /start.sh
-
-# Start Ghost with delay to avoid race conditions
-CMD ["/start.sh"]
+# Start Ghost with memory optimization
+CMD ["node", "--max-old-space-size=256", "current/index.js"]
