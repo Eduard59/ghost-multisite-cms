@@ -1,0 +1,212 @@
+{{!< default}}
+
+{{#post}}
+<article class="relative">
+    {{!-- Hero Image --}}
+    {{#if feature_image}}
+        <div class="w-full h-96 relative overflow-hidden bg-gray-100">
+            <img src="{{img_url feature_image size="xl"}}" alt="{{title}}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        </div>
+    {{/if}}
+    
+    {{!-- Article Header --}}
+    <header class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            {{!-- Breadcrumbs --}}
+            <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+                <a href="/" class="hover:text-primary">Home</a>
+                <span>/</span>
+                {{#primary_tag}}
+                    <a href="{{url}}" class="hover:text-primary">{{name}}</a>
+                    <span>/</span>
+                {{/primary_tag}}
+                <span class="text-gray-900">{{title}}</span>
+            </nav>
+            
+            {{!-- Title --}}
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{{title}}</h1>
+            
+            {{!-- Meta --}}
+            <div class="flex flex-wrap items-center gap-4 text-gray-600">
+                {{#primary_author}}
+                    <div class="flex items-center space-x-2">
+                        {{#if profile_image}}
+                            <img src="{{img_url profile_image size="xs"}}" alt="{{name}}" class="w-10 h-10 rounded-full">
+                        {{/if}}
+                        <div>
+                            <a href="{{url}}" class="font-medium text-gray-900 hover:text-primary">{{name}}</a>
+                            {{#if bio}}
+                                <p class="text-sm text-gray-500">{{bio}}</p>
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/primary_author}}
+                
+                <div class="flex items-center space-x-4 text-sm">
+                    <time datetime="{{date format='YYYY-MM-DD'}}">{{date format="MMMM DD, YYYY"}}</time>
+                    {{#if reading_time}}
+                        <span>•</span>
+                        <span>{{reading_time}}</span>
+                    {{/if}}
+                </div>
+            </div>
+            
+            {{!-- Tags --}}
+            {{#if tags}}
+                <div class="flex flex-wrap gap-2 mt-4">
+                    {{#foreach tags}}
+                        <a href="{{url}}" class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-primary hover:text-white transition-colors">
+                            {{name}}
+                        </a>
+                    {{/foreach}}
+                </div>
+            {{/if}}
+        </div>
+    </header>
+    
+    {{!-- Content --}}
+    <section class="container mx-auto px-4 pb-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="ghost-content prose prose-lg max-w-none">
+                {{content}}
+            </div>
+        </div>
+    </section>
+    
+    {{!-- Share Buttons --}}
+    <section class="container mx-auto px-4 py-8 border-t">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-lg font-semibold mb-4">Share this article</h3>
+            <div class="flex space-x-4">
+                <a href="https://twitter.com/intent/tweet?text={{encode title}}&url={{url absolute="true"}}" 
+                   target="_blank" 
+                   rel="noopener"
+                   class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+                    Share on Twitter
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{url absolute="true"}}" 
+                   target="_blank" 
+                   rel="noopener"
+                   class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors">
+                    Share on LinkedIn
+                </a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{url absolute="true"}}" 
+                   target="_blank" 
+                   rel="noopener"
+                   class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    Share on Facebook
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    {{!-- Author Box --}}
+    {{#primary_author}}
+        <section class="container mx-auto px-4 py-8 border-t">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">About the Author</h3>
+                    <div class="flex items-start space-x-4">
+                        {{#if profile_image}}
+                            <img src="{{img_url profile_image size="m"}}" alt="{{name}}" class="w-20 h-20 rounded-full">
+                        {{/if}}
+                        <div class="flex-1">
+                            <h4 class="text-xl font-bold mb-2">
+                                <a href="{{url}}" class="text-gray-900 hover:text-primary">{{name}}</a>
+                            </h4>
+                            {{#if bio}}
+                                <p class="text-gray-600 mb-3">{{bio}}</p>
+                            {{/if}}
+                            {{#if location}}
+                                <p class="text-sm text-gray-500">📍 {{location}}</p>
+                            {{/if}}
+                            {{#if website}}
+                                <a href="{{website}}" target="_blank" rel="noopener" class="text-sm text-primary hover:text-primary-dark">
+                                    🔗 {{website}}
+                                </a>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {{/primary_author}}
+    
+    {{!-- Newsletter CTA --}}
+    {{#if @site.members_enabled}}
+        <section class="container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-r from-primary to-primary-dark rounded-lg p-8 text-center text-white">
+                    <h3 class="text-2xl font-bold mb-4">Stay Updated</h3>
+                    <p class="mb-6">Get the latest insights on dental technology and AI delivered to your inbox.</p>
+                    <button data-portal="true" class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        Subscribe Now
+                    </button>
+                </div>
+            </div>
+        </section>
+    {{/if}}
+    
+    {{!-- Related Posts --}}
+    {{#get "posts" filter="tags:[{{primary_tag.slug}}]+id:-{{id}}" limit="3" include="authors,tags"}}
+        {{#if posts}}
+            <section class="container mx-auto px-4 py-12 border-t">
+                <div class="max-w-6xl mx-auto">
+                    <h3 class="text-2xl font-bold mb-8">Related Articles</h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        {{#foreach posts}}
+                            <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                {{#if feature_image}}
+                                    <a href="{{url}}">
+                                        <img src="{{img_url feature_image size="m"}}" alt="{{title}}" class="w-full h-48 object-cover rounded-t-lg">
+                                    </a>
+                                {{/if}}
+                                <div class="p-6">
+                                    <h4 class="text-lg font-bold mb-2">
+                                        <a href="{{url}}" class="text-gray-900 hover:text-primary transition-colors">{{title}}</a>
+                                    </h4>
+                                    <p class="text-gray-600 mb-3">{{excerpt words="20"}}</p>
+                                    <a href="{{url}}" class="text-primary font-medium hover:text-primary-dark transition-colors">
+                                        Read more →
+                                    </a>
+                                </div>
+                            </article>
+                        {{/foreach}}
+                    </div>
+                </div>
+            </section>
+        {{/if}}
+    {{/get}}
+</article>
+
+{{!-- Structured Data for SEO --}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{title}}",
+    "image": "{{img_url feature_image absolute="true"}}",
+    "datePublished": "{{date format='YYYY-MM-DD'}}",
+    "dateModified": "{{date updated_at format='YYYY-MM-DD'}}",
+    "author": {
+        "@type": "Person",
+        "name": "{{primary_author.name}}",
+        "url": "{{primary_author.url absolute="true"}}"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "{{@site.title}}",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{@site.logo}}"
+        }
+    },
+    "description": "{{excerpt}}",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{url absolute="true"}}"
+    }
+}
+</script>
+{{/post}}

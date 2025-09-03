@@ -1,0 +1,123 @@
+services:
+  # Ghost CMS для Multi-Site архитектуры
+  - type: web
+    name: ghost-multisite-cms
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    region: oregon
+    plan: starter # $7/месяц для продакшена, можно начать с free
+    branch: main
+    
+    # Render не поддерживает persistent disk для Docker, 
+    # поэтому используем внешнюю БД или SQLite в памяти
+    
+    envVars:
+      # Основные настройки
+      - key: NODE_ENV
+        value: production
+      
+      - key: url
+        value: https://blog.dentalprice.ai
+      
+      # База данных - используем PostgreSQL от Render
+      - key: database__client
+        value: postgres
+      
+      - key: database__connection__host
+        fromDatabase:
+          name: ghost-multisite-db
+          property: host
+      
+      - key: database__connection__port
+        fromDatabase:
+          name: ghost-multisite-db
+          property: port
+      
+      - key: database__connection__database
+        fromDatabase:
+          name: ghost-multisite-db
+          property: database
+      
+      - key: database__connection__user
+        fromDatabase:
+          name: ghost-multisite-db
+          property: user
+      
+      - key: database__connection__password
+        fromDatabase:
+          name: ghost-multisite-db
+          property: password
+      
+      - key: database__connection__ssl
+        value: true
+      
+      # Email настройки (опционально)
+      - key: mail__transport
+        value: SMTP
+      
+      - key: mail__from
+        value: noreply@dentalprice.ai
+      
+      - key: mail__options__service
+        value: Mailgun
+      
+      - key: mail__options__auth__user
+        sync: false # Добавьте вручную в Render Dashboard
+      
+      - key: mail__options__auth__pass
+        sync: false # Добавьте вручную в Render Dashboard
+      
+      # S3 для хранения изображений (опционально)
+      - key: storage__active
+        value: s3
+      
+      - key: storage__s3__accessKeyId
+        sync: false
+      
+      - key: storage__s3__secretAccessKey
+        sync: false
+      
+      - key: storage__s3__bucket
+        value: dentalprice-blog-images
+      
+      - key: storage__s3__region
+        value: us-west-2
+      
+      # Portal настройки
+      - key: portal__name
+        value: Multi-Site Content Hub
+      
+      - key: portal__button
+        value: true
+    
+    # Автодеплой при push
+    autoDeploy: true
+    
+    # Health check
+    healthCheckPath: /ghost/api/admin/site/
+    
+    # Custom domains
+    customDomains:
+      - blog.dentalprice.ai
+
+# База данных PostgreSQL для Ghost
+databases:
+  - name: ghost-multisite-db
+    databaseName: ghost_production
+    user: ghost_user
+    region: oregon
+    plan: starter # $7/месяц
+    
+    # Автоматические бэкапы
+    backupSchedule: "@daily"
+    
+    # IP whitelist (оставляем пустым для доступа из Render сервисов)
+    ipAllowList: []
+
+# Если хотите использовать SQLite вместо PostgreSQL,
+# удалите секцию databases и измените envVars на:
+# - key: database__client
+#   value: sqlite3
+# - key: database__connection__filename
+#   value: /var/lib/ghost/content/data/ghost.db

@@ -1,0 +1,111 @@
+{{!< default}}
+
+{{!-- Hero Section --}}
+<section class="bg-gradient-to-r from-blue-50 to-indigo-50 py-16">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                {{@site.title}}
+            </h1>
+            <p class="text-xl text-gray-600 mb-8">
+                {{@site.description}}
+            </p>
+            {{#if @site.members_enabled}}
+                <button data-portal="true" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors">
+                    Subscribe to Newsletter
+                </button>
+            {{/if}}
+        </div>
+    </div>
+</section>
+
+{{!-- Featured Posts --}}
+{{#get "posts" filter="featured:true" limit="3" include="authors,tags"}}
+    {{#if posts}}
+        <section class="py-12 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Featured Articles</h2>
+                <div class="grid md:grid-cols-3 gap-8">
+                    {{#foreach posts}}
+                        <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            {{#if feature_image}}
+                                <a href="{{url}}">
+                                    <img src="{{feature_image}}" alt="{{title}}" class="w-full h-48 object-cover rounded-t-lg">
+                                </a>
+                            {{/if}}
+                            <div class="p-6">
+                                <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                                    {{#primary_tag}}
+                                        <a href="{{url}}" class="text-primary hover:text-primary-dark">{{name}}</a>
+                                    {{/primary_tag}}
+                                    <span>•</span>
+                                    <time datetime="{{date format='YYYY-MM-DD'}}">{{date format="MMM DD, YYYY"}}</time>
+                                </div>
+                                <h3 class="text-xl font-bold mb-2">
+                                    <a href="{{url}}" class="text-gray-900 hover:text-primary transition-colors">{{title}}</a>
+                                </h3>
+                                <p class="text-gray-600 mb-4">{{excerpt words="30"}}</p>
+                                <a href="{{url}}" class="text-primary font-medium hover:text-primary-dark transition-colors">
+                                    Read more →
+                                </a>
+                            </div>
+                        </article>
+                    {{/foreach}}
+                </div>
+            </div>
+        </section>
+    {{/if}}
+{{/get}}
+
+{{!-- Recent Posts --}}
+<section class="py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">Latest Articles</h2>
+        <div class="max-w-4xl mx-auto">
+            {{#foreach posts}}
+                <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow mb-6 p-6">
+                    <div class="flex items-start space-x-4">
+                        {{#if feature_image}}
+                            <a href="{{url}}" class="flex-shrink-0">
+                                <img src="{{img_url feature_image size="s"}}" alt="{{title}}" class="w-24 h-24 object-cover rounded-lg">
+                            </a>
+                        {{/if}}
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-2 text-sm text-gray-500 mb-2">
+                                {{#primary_tag}}
+                                    <a href="{{url}}" class="text-primary hover:text-primary-dark">{{name}}</a>
+                                {{/primary_tag}}
+                                <span>•</span>
+                                <time datetime="{{date format='YYYY-MM-DD'}}">{{date format="MMM DD, YYYY"}}</time>
+                                {{#if reading_time}}
+                                    <span>•</span>
+                                    <span>{{reading_time}}</span>
+                                {{/if}}
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">
+                                <a href="{{url}}" class="text-gray-900 hover:text-primary transition-colors">{{title}}</a>
+                            </h3>
+                            <p class="text-gray-600 mb-3">{{excerpt words="40"}}</p>
+                            <div class="flex items-center justify-between">
+                                <a href="{{url}}" class="text-primary font-medium hover:text-primary-dark transition-colors">
+                                    Read more →
+                                </a>
+                                {{#primary_author}}
+                                    <div class="flex items-center space-x-2">
+                                        {{#if profile_image}}
+                                            <img src="{{img_url profile_image size="xs"}}" alt="{{name}}" class="w-6 h-6 rounded-full">
+                                        {{/if}}
+                                        <span class="text-sm text-gray-600">{{name}}</span>
+                                    </div>
+                                {{/primary_author}}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {{/foreach}}
+        </div>
+        
+        {{!-- Pagination --}}
+        {{pagination}}
+    </div>
+</section>

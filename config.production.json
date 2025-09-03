@@ -1,0 +1,59 @@
+{
+  "url": "https://blog.dentalprice.ai",
+  "server": {
+    "port": 2368,
+    "host": "0.0.0.0"
+  },
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "/var/lib/ghost/content/data/ghost.db"
+    },
+    "useNullAsDefault": true
+  },
+  "mail": {
+    "transport": "Direct"
+  },
+  "logging": {
+    "level": "info",
+    "transports": ["stdout"]
+  },
+  "paths": {
+    "contentPath": "/var/lib/ghost/content"
+  },
+  "privacy": {
+    "useUpdateCheck": false,
+    "useGravatar": false,
+    "useRpcPing": false,
+    "useStructuredData": true
+  },
+  "imageOptimization": {
+    "resize": true,
+    "srcsets": true
+  },
+  "compress": true,
+  "preloadHeaders": true,
+  "caching": {
+    "frontend": {
+      "maxAge": 0
+    }
+  },
+  "adapters": {
+    "storage": {
+      "active": "LocalFileStorage"
+    }
+  },
+  "portal": {
+    "name": "DentalPrice AI",
+    "button": true,
+    "plans": ["free"],
+    "signupButtonText": "Subscribe to Newsletter",
+    "buttonIcon": "icon-1",
+    "buttonStyle": "icon-and-text",
+    "allowSelfSignup": true
+  },
+  "labs": {
+    "collections": true,
+    "members": true
+  }
+}
