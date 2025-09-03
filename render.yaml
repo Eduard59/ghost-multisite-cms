@@ -22,6 +22,22 @@ services:
       
       - key: database__connection__filename
         value: /var/lib/ghost/content/data/ghost.db
+      
+      # Отключаем email верификацию
+      - key: auth__type
+        value: password
+      
+      - key: auth__method
+        value: password
+      
+      - key: labs__emailVerification
+        value: false
+      
+      - key: members__emailVerification
+        value: false
+      
+      - key: admin__emailVerification
+        value: false
     
     # Постоянное хранилище для SQLite
     disk:

@@ -28,5 +28,18 @@
   "compress": true,
   "imageOptimization": {
     "resize": true
+  },
+  "auth": {
+    "type": "password",
+    "method": "password"
+  },
+  "labs": {
+    "emailVerification": false
+  },
+  "members": {
+    "emailVerification": false
+  },
+  "admin": {
+    "emailVerification": false
   }
 }
