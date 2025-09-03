@@ -50,8 +50,8 @@ services:
           name: ghost-multisite-db
           property: password
       
-      - key: database__connection__ssl
-        value: true
+      - key: database__connection__ssl__rejectUnauthorized
+        value: false
       
       # Email настройки (опционально)
       - key: mail__transport
