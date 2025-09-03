@@ -21,12 +21,27 @@ services:
         # Временно используем домен Render, потом поменяете на свой
         value: https://ghost-multisite-cms.onrender.com
       
-      # База данных - используем SQLite для начала
+      # База данных - PostgreSQL от Render
       - key: database__client
-        value: sqlite3
+        value: postgres
       
-      - key: database__connection__filename
-        value: /var/lib/ghost/content/data/ghost.db
+      - key: database__connection__host
+        value: dpg-d2rqk73e5dus73c8vthg-a.oregon-postgres.render.com
+      
+      - key: database__connection__port
+        value: 5432
+      
+      - key: database__connection__database
+        value: ghost_fresh_db
+      
+      - key: database__connection__user
+        value: ghost_user
+      
+      - key: database__connection__password
+        value: qMy2lS3bgD53ZsnmeB3S8RulLcI4oq0K
+      
+      - key: database__connection__ssl__rejectUnauthorized
+        value: false
       
       # Email настройки (опционально)
       - key: mail__transport
