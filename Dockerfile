@@ -22,5 +22,5 @@ EXPOSE 2368
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s \
   CMD node /var/lib/ghost/current/index.js health
 
-# Start Ghost
-CMD ["node", "current/index.js"]
+# Start Ghost with memory optimization
+CMD ["node", "--max-old-space-size=256", "current/index.js"]
