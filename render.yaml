@@ -6,7 +6,7 @@ services:
     dockerfilePath: ./Dockerfile
     dockerContext: .
     region: oregon
-    plan: starter # $7/месяц для продакшена, можно начать с free
+    plan: free # Бесплатный план для начала
     branch: main
     
     # Render не поддерживает persistent disk для Docker, 
@@ -104,9 +104,9 @@ databases:
     databaseName: ghost_production
     user: ghost_user
     region: oregon
-    plan: starter # $7/месяц
-    # Примечание: backupSchedule доступен только на Pro плане
-    # Для Starter план бэкапы делаются автоматически раз в день
+    plan: free # Бесплатный план для начала (или используйте "standard" за $7/месяц)
+    # Доступные планы: free, standard ($7), pro ($20), pro plus ($50)
+    # free план: 256MB RAM, 1GB storage - достаточно для тестирования
     
     # IP whitelist (оставляем пустым для доступа из Render сервисов)
     ipAllowList: []
