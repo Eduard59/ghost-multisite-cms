@@ -22,5 +22,8 @@ EXPOSE 2368
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s \
   CMD node /var/lib/ghost/current/index.js health
 
-# Start Ghost with memory optimization
-CMD ["node", "--max-old-space-size=256", "current/index.js"]
+# Add startup script
+RUN echo '#!/bin/sh\nsleep 5\nnode --max-old-space-size=256 current/index.js' > /start.sh && chmod +x /start.sh
+
+# Start Ghost with delay to avoid race conditions
+CMD ["/start.sh"]
