@@ -27,27 +27,27 @@ services:
       
       - key: database__connection__host
         fromDatabase:
-          name: ghost-multisite-db
+          name: ghost-multisite-db-clean
           property: host
       
       - key: database__connection__port
         fromDatabase:
-          name: ghost-multisite-db
+          name: ghost-multisite-db-clean
           property: port
       
       - key: database__connection__database
         fromDatabase:
-          name: ghost-multisite-db
+          name: ghost-multisite-db-clean
           property: database
       
       - key: database__connection__user
         fromDatabase:
-          name: ghost-multisite-db
+          name: ghost-multisite-db-clean
           property: user
       
       - key: database__connection__password
         fromDatabase:
-          name: ghost-multisite-db
+          name: ghost-multisite-db-clean
           property: password
       
       # SSL для PostgreSQL на Render
@@ -101,8 +101,8 @@ services:
 
 # База данных PostgreSQL для Ghost
 databases:
-  - name: ghost-multisite-db
-    databaseName: ghost_prod_v2
+  - name: ghost-multisite-db-clean
+    databaseName: ghost_clean_prod
     user: ghost_user
     region: oregon
     plan: free # Бесплатный план для начала (или используйте "standard" за $7/месяц)
