@@ -8,6 +8,11 @@ RUN apk add --no-cache sqlite \
 # Copy custom configuration
 COPY config.production.json /var/lib/ghost/config.production.json
 
+# Copy reset script and startup script
+COPY --chown=node:node reset-admin.sql /tmp/reset-admin.sql
+COPY --chown=node:node startup.sh /usr/local/bin/startup.sh
+RUN chmod +x /usr/local/bin/startup.sh
+
 # Create necessary directories
 RUN mkdir -p /var/lib/ghost/content/data /var/lib/ghost/content/images
 
@@ -24,5 +29,5 @@ EXPOSE 2368
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s \
   CMD node /var/lib/ghost/current/index.js health
 
-# Start Ghost with memory optimization
-CMD ["node", "--max-old-space-size=256", "current/index.js"]
+# Start Ghost with startup script
+CMD ["/usr/local/bin/startup.sh"]

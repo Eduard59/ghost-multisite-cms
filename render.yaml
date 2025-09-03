@@ -59,6 +59,10 @@ services:
       - key: portal__button
         value: true
       
+      # Сброс админа (установите true для сброса пароля)
+      - key: RESET_ADMIN
+        value: false
+      
     
     # Постоянное хранилище для SQLite
     disk:

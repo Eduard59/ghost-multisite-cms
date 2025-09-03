@@ -1,5 +1,5 @@
 {
-  "url": "https://blog.dentalprice.ai",
+  "url": "https://ghost-cms-multisite.onrender.com",
   "server": {
     "port": 2368,
     "host": "0.0.0.0"
@@ -50,5 +50,18 @@
   "labs": {
     "collections": true,
     "members": true
+  },
+  "auth": {
+    "type": "password"
+  },
+  "admin": {
+    "redirects": false
+  },
+  "spam": {
+    "user_login": {
+      "minWait": 60,
+      "maxWait": 300,
+      "freeRetries": 10
+    }
   }
 }
