@@ -1,7 +1,7 @@
 FROM ghost:5-alpine
 
-# Install SQLite3 for database
-RUN apk add --no-cache sqlite
+# Install PostgreSQL client library
+RUN npm install pg
 
 # Copy custom configuration
 COPY config.production.json /var/lib/ghost/config.production.json
