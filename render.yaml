@@ -102,7 +102,7 @@ services:
 # База данных PostgreSQL для Ghost
 databases:
   - name: ghost-multisite-db
-    databaseName: ghost_production
+    databaseName: ghost_prod_v2
     user: ghost_user
     region: oregon
     plan: free # Бесплатный план для начала (или используйте "standard" за $7/месяц)
