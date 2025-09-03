@@ -50,8 +50,9 @@ services:
           name: ghost-multisite-db
           property: password
       
-      - key: database__connection__ssl__rejectUnauthorized
-        value: false
+      # SSL для PostgreSQL на Render
+      - key: database__connection__ssl
+        value: '{"rejectUnauthorized": false}'
       
       # Email настройки (опционально)
       - key: mail__transport
