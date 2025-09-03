@@ -26,7 +26,7 @@ services:
         value: postgres
       
       - key: database__connection__host
-        value: dpg-d2rqk73e5dus73c8vthg-a.oregon-postgres.render.com
+        value: dpg-d2rrqebipnbc73dr43bg-a.oregon-postgres.render.com
       
       - key: database__connection__port
         value: 5432
@@ -38,7 +38,7 @@ services:
         value: ghost_user
       
       - key: database__connection__password
-        value: qMy2lS3bgD53ZsnmeB3S8RulLcI4oq0K
+        value: dbIlEKUgRcCabZILXCQF9KML4BrDf7sk
       
       - key: database__connection__ssl__rejectUnauthorized
         value: false
