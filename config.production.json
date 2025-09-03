@@ -38,11 +38,6 @@
       "maxAge": 0
     }
   },
-  "adapters": {
-    "storage": {
-      "active": "LocalFileStorage"
-    }
-  },
   "portal": {
     "name": "DentalPrice AI",
     "button": true,
