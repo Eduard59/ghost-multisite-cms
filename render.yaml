@@ -1,12 +1,11 @@
 services:
-  # Ghost CMS для Multi-Site архитектуры
   - type: web
-    name: ghost-cms-multisite
+    name: ghost-cms-simple
     runtime: docker
     dockerfilePath: ./Dockerfile
     dockerContext: .
     region: oregon
-    plan: starter # Платный план $7/месяц для постоянного диска
+    plan: starter # $7/месяц для постоянного хранения
     branch: main
     
     envVars:
@@ -15,70 +14,23 @@ services:
         value: production
       
       - key: url
-        value: https://ghost-cms-multisite.onrender.com
+        value: https://ghost-cms-simple.onrender.com
       
-      # База данных - SQLite с постоянным хранилищем
+      # База данных
       - key: database__client
         value: sqlite3
       
       - key: database__connection__filename
-        value: /var/data/ghost.db
-      
-      # Email настройки (опционально)
-      - key: mail__transport
-        value: SMTP
-      
-      - key: mail__from
-        value: noreply@dentalprice.ai
-      
-      - key: mail__options__service
-        value: Mailgun
-      
-      - key: mail__options__auth__user
-        sync: false # Добавьте вручную в Render Dashboard
-      
-      - key: mail__options__auth__pass
-        sync: false # Добавьте вручную в Render Dashboard
-      
-      # S3 для хранения изображений (опционально - раскомментируйте если нужно)
-      # - key: storage__active
-      #   value: s3
-      # - key: storage__s3__accessKeyId
-      #   sync: false
-      # - key: storage__s3__secretAccessKey
-      #   sync: false
-      # - key: storage__s3__bucket
-      #   value: dentalprice-blog-images
-      # - key: storage__s3__region
-      #   value: us-west-2
-      
-      # Portal настройки
-      - key: portal__name
-        value: Multi-Site Content Hub
-      
-      - key: portal__button
-        value: true
-      
-      # Сброс админа (установите true для сброса пароля)
-      - key: RESET_ADMIN
-        value: false
-      
+        value: /var/lib/ghost/content/data/ghost.db
     
     # Постоянное хранилище для SQLite
     disk:
       name: ghost-data
-      mountPath: /var/data
-      sizeGB: 1 # 1GB для начала
+      mountPath: /var/lib/ghost/content
+      sizeGB: 1
     
-    # Автодеплой при push
+    # Автодеплой
     autoDeploy: true
     
     # Health check
     healthCheckPath: /ghost/api/admin/site/
-    
-    # Custom domains - раскомментируйте когда будете готовы подключить свой домен
-    # customDomains:
-    #   - blog.dentalprice.ai
-
-# SQLite с постоянным диском используется для надежного хранения данных
-# Данные сохраняются между перезапусками на диске Render

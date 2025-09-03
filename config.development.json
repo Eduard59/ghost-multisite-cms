@@ -1,0 +1,33 @@
+{
+  "url": "http://localhost:2369",
+  "server": {
+    "port": 2368,
+    "host": "0.0.0.0"
+  },
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "/var/lib/ghost/content/data/ghost.db"
+    }
+  },
+  "mail": {
+    "transport": "Direct"
+  },
+  "logging": {
+    "transports": ["stdout"]
+  },
+  "auth": {
+    "method": "password",
+    "type": "password"
+  },
+  "labs": {
+    "emailVerification": false
+  },
+  "members": {
+    "emailVerification": false
+  },
+  "enableDeveloperExperiments": true,
+  "admin": {
+    "emailVerification": false
+  }
+}
