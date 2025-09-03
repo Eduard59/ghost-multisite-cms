@@ -27,27 +27,27 @@ services:
       
       - key: database__connection__host
         fromDatabase:
-          name: ghost-multisite-db-clean
+          name: ghost-multisite-db
           property: host
       
       - key: database__connection__port
         fromDatabase:
-          name: ghost-multisite-db-clean
+          name: ghost-multisite-db
           property: port
       
       - key: database__connection__database
         fromDatabase:
-          name: ghost-multisite-db-clean
+          name: ghost-multisite-db
           property: database
       
       - key: database__connection__user
         fromDatabase:
-          name: ghost-multisite-db-clean
+          name: ghost-multisite-db
           property: user
       
       - key: database__connection__password
         fromDatabase:
-          name: ghost-multisite-db-clean
+          name: ghost-multisite-db
           property: password
       
       # SSL для PostgreSQL на Render
@@ -88,6 +88,13 @@ services:
       
       - key: portal__button
         value: true
+      
+      # Отключаем проверку миграций при старте
+      - key: database__pool__min
+        value: 0
+      
+      - key: database__pool__max
+        value: 10
     
     # Автодеплой при push
     autoDeploy: true
@@ -101,8 +108,8 @@ services:
 
 # База данных PostgreSQL для Ghost
 databases:
-  - name: ghost-multisite-db-clean
-    databaseName: ghost_clean_prod
+  - name: ghost-multisite-db
+    databaseName: ghost_prod_v2
     user: ghost_user
     region: oregon
     plan: free # Бесплатный план для начала (или используйте "standard" за $7/месяц)
