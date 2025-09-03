@@ -68,21 +68,17 @@ services:
       - key: mail__options__auth__pass
         sync: false # Добавьте вручную в Render Dashboard
       
-      # S3 для хранения изображений (опционально)
-      - key: storage__active
-        value: s3
-      
-      - key: storage__s3__accessKeyId
-        sync: false
-      
-      - key: storage__s3__secretAccessKey
-        sync: false
-      
-      - key: storage__s3__bucket
-        value: dentalprice-blog-images
-      
-      - key: storage__s3__region
-        value: us-west-2
+      # S3 для хранения изображений (опционально - раскомментируйте если нужно)
+      # - key: storage__active
+      #   value: s3
+      # - key: storage__s3__accessKeyId
+      #   sync: false
+      # - key: storage__s3__secretAccessKey
+      #   sync: false
+      # - key: storage__s3__bucket
+      #   value: dentalprice-blog-images
+      # - key: storage__s3__region
+      #   value: us-west-2
       
       # Portal настройки
       - key: portal__name
@@ -108,9 +104,8 @@ databases:
     user: ghost_user
     region: oregon
     plan: starter # $7/месяц
-    
-    # Автоматические бэкапы
-    backupSchedule: "@daily"
+    # Примечание: backupSchedule доступен только на Pro плане
+    # Для Starter план бэкапы делаются автоматически раз в день
     
     # IP whitelist (оставляем пустым для доступа из Render сервисов)
     ipAllowList: []
