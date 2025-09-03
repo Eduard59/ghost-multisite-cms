@@ -1,16 +1,13 @@
 services:
   # Ghost CMS для Multi-Site архитектуры
   - type: web
-    name: ghost-multisite-cms
+    name: ghost-cms-multisite
     runtime: docker
     dockerfilePath: ./Dockerfile
     dockerContext: .
     region: oregon
-    plan: free # Бесплатный план для начала
+    plan: starter # Платный план $7/месяц для постоянного диска
     branch: main
-    
-    # Render не поддерживает persistent disk для Docker, 
-    # поэтому используем внешнюю БД или SQLite в памяти
     
     envVars:
       # Основные настройки
@@ -18,8 +15,7 @@ services:
         value: production
       
       - key: url
-        # Временно используем домен Render, потом поменяете на свой
-        value: https://ghost-multisite-cms.onrender.com
+        value: https://ghost-cms-multisite.onrender.com
       
       # База данных - SQLite с постоянным хранилищем
       - key: database__client
@@ -80,13 +76,5 @@ services:
     # customDomains:
     #   - blog.dentalprice.ai
 
-# SQLite используется временно для упрощения деплоя
-# Позже можно переключиться на PostgreSQL когда Ghost заработает
-
-# Для PostgreSQL раскомментируйте:
-# databases:
-#   - name: ghost-multisite-db
-#     databaseName: ghost_production
-#     user: ghost_user
-#     region: oregon
-#     plan: free
+# SQLite с постоянным диском используется для надежного хранения данных
+# Данные сохраняются между перезапусками на диске Render
