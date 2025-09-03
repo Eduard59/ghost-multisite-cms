@@ -18,7 +18,8 @@ services:
         value: production
       
       - key: url
-        value: https://blog.dentalprice.ai
+        # Временно используем домен Render, потом поменяете на свой
+        value: https://ghost-multisite-cms.onrender.com
       
       # База данных - используем PostgreSQL от Render
       - key: database__client
@@ -93,9 +94,9 @@ services:
     # Health check
     healthCheckPath: /ghost/api/admin/site/
     
-    # Custom domains
-    customDomains:
-      - blog.dentalprice.ai
+    # Custom domains - раскомментируйте когда будете готовы подключить свой домен
+    # customDomains:
+    #   - blog.dentalprice.ai
 
 # База данных PostgreSQL для Ghost
 databases:
