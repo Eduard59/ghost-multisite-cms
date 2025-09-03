@@ -1,15 +1,13 @@
 FROM ghost:5-alpine
 
-# Install PostgreSQL client and S3 storage adapter
-RUN npm install pg ghost-storage-adapter-s3 \
-    && mkdir -p /var/lib/ghost/content/adapters/storage \
-    && cp -r node_modules/ghost-storage-adapter-s3 /var/lib/ghost/content/adapters/storage/s3
+# Install SQLite3 for database
+RUN apk add --no-cache sqlite
 
 # Copy custom configuration
 COPY config.production.json /var/lib/ghost/config.production.json
 
-# Copy custom theme
-COPY themes/dentalprice /var/lib/ghost/content/themes/dentalprice
+# Create necessary directories
+RUN mkdir -p /var/lib/ghost/content/data /var/lib/ghost/content/images
 
 # Set proper permissions
 RUN chown -R node:node /var/lib/ghost/content
