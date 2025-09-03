@@ -1,7 +1,7 @@
 FROM ghost:5-alpine
 
-# Install S3 storage adapter for images (Render doesn't have persistent storage)
-RUN npm install ghost-storage-adapter-s3 \
+# Install PostgreSQL client and S3 storage adapter
+RUN npm install pg ghost-storage-adapter-s3 \
     && mkdir -p /var/lib/ghost/content/adapters/storage \
     && cp -r node_modules/ghost-storage-adapter-s3 /var/lib/ghost/content/adapters/storage/s3
 
