@@ -17,6 +17,28 @@ services:
       
       - key: database__connection__filename
         value: /var/lib/ghost/content/data/ghost.db
+      
+      # Email configuration (Zoho SMTP)
+      - key: mail__transport
+        value: SMTP
+      
+      - key: mail__options__host
+        value: smtp.zoho.com
+      
+      - key: mail__options__port
+        value: 587
+      
+      - key: mail__options__secure
+        value: false
+      
+      - key: mail__options__auth__user
+        value: noreply@dentalprice.ai
+      
+      - key: mail__options__auth__pass
+        value: yFBJKnVS8Arw
+      
+      - key: mail__from
+        value: DentalPrice AI <noreply@dentalprice.ai>
     
     disk:
       name: ghost-storage

@@ -1,0 +1,32 @@
+{
+  "url": "https://ghost-cms-final.onrender.com",
+  "server": {
+    "port": 2368,
+    "host": "0.0.0.0"
+  },
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "/var/lib/ghost/content/data/ghost.db"
+    }
+  },
+  "mail": {
+    "transport": "SMTP",
+    "options": {
+      "host": "smtp.zoho.com",
+      "port": 587,
+      "secure": false,
+      "auth": {
+        "user": "noreply@dentalprice.ai",
+        "pass": "yFBJKnVS8Arw"
+      }
+    },
+    "from": "'DentalPrice AI' <noreply@dentalprice.ai>"
+  },
+  "logging": {
+    "transports": ["stdout"]
+  },
+  "paths": {
+    "contentPath": "/var/lib/ghost/content"
+  }
+}
