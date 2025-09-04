@@ -1,52 +1,26 @@
 services:
   - type: web
-    name: ghost-cms-simple
+    name: ghost-cms-final
     runtime: docker
-    dockerfilePath: ./Dockerfile
-    dockerContext: .
     region: oregon
-    plan: starter # $7/месяц для постоянного хранения
-    branch: main
+    plan: starter # Платный план для постоянного хранения
     
     envVars:
-      # Основные настройки
       - key: NODE_ENV
         value: production
       
       - key: url
-        value: https://ghost-cms-simple.onrender.com
+        value: https://ghost-cms-final.onrender.com
       
-      # База данных
       - key: database__client
         value: sqlite3
       
       - key: database__connection__filename
         value: /var/lib/ghost/content/data/ghost.db
-      
-      # Отключаем email верификацию
-      - key: auth__type
-        value: password
-      
-      - key: auth__method
-        value: password
-      
-      - key: labs__emailVerification
-        value: false
-      
-      - key: members__emailVerification
-        value: false
-      
-      - key: admin__emailVerification
-        value: false
     
-    # Постоянное хранилище для SQLite
     disk:
-      name: ghost-data
+      name: ghost-storage
       mountPath: /var/lib/ghost/content
       sizeGB: 1
     
-    # Автодеплой
     autoDeploy: true
-    
-    # Health check
-    healthCheckPath: /ghost/api/admin/site/
