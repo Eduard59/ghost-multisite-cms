@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ghost-cms-final
+    name: dentalprice-blog
     runtime: docker
     region: oregon
     plan: starter # Платный план для постоянного хранения
@@ -10,7 +10,7 @@ services:
         value: production
       
       - key: url
-        value: https://ghost-cms-final.onrender.com
+        value: https://blog.dentalprice.ai
       
       - key: database__client
         value: sqlite3
@@ -44,5 +44,8 @@ services:
       name: ghost-storage
       mountPath: /var/lib/ghost/content
       sizeGB: 1
+    
+    customDomains:
+      - name: blog.dentalprice.ai
     
     autoDeploy: true
