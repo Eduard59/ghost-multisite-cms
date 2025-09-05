@@ -1,86 +1,53 @@
-# Ghost CMS для Multi-Site Architecture
+# Ghost Blog для DentalPrice
 
-## 🐳 Docker конфигурация Ghost для Render
+## 📝 Простой блог на поддомене
 
-Этот Ghost CMS используется как единый источник контента для нескольких Next.js сайтов через систему тегов.
+Это Ghost CMS для blog.dentalprice.ai - отдельный блог без сложных интеграций.
 
-## 📁 Структура файлов
+## 🚀 Деплой
+
+### Render настройки
+- **Сервис**: dentalprice-blog
+- **URL**: https://dentalprice-blog.onrender.com
+- **Домен**: blog.dentalprice.ai
+- **План**: Starter ($7/месяц)
+
+### DNS настройка
+```
+Type: CNAME
+Name: blog
+Value: dentalprice-blog.onrender.com
+```
+
+## 📁 Файлы
 
 ```
 ghost-cms-docker/
-├── Dockerfile              # Docker образ с Ghost 5
-├── render.yaml            # Конфигурация для Render
+├── Dockerfile              # Docker образ
+├── render.yaml            # Конфигурация Render
 ├── config.production.json # Настройки Ghost
-├── deploy.sh             # Скрипт деплоя (опционально)
-└── themes/               # Кастомные темы (опционально)
+└── docker-compose.yml     # Локальная разработка
 ```
 
-## 🚀 Быстрый деплой
+## 💻 Локальная разработка
 
 ```bash
-# 1. Создайте GitHub репозиторий
-git init
-git add .
-git commit -m "Ghost CMS multi-site setup"
-gh repo create ghost-multisite-cms --public --push
-
-# 2. Подключите к Render
-# Dashboard → New → Blueprint → Connect repo
-
-# 3. Настройте домен
-# Settings → Custom Domains → blog.dentalprice.ai
+docker compose up
+# Открыть: http://localhost:2369/ghost
 ```
 
-## 🏷️ Настройка Multi-Site через теги
+## 📧 Email
 
-### В Ghost Admin создайте internal теги:
+Настроен Zoho SMTP:
+- От: noreply@dentalprice.ai
+- Работают все функции email
 
-| Tag | Для сайта | Описание |
-|-----|-----------|----------|
-| `#dentalprice` | dentalprice.ai | Основной сайт |
-| `#partners` | partner sites | Партнерские сайты |
-| `#internal` | - | Внутренние посты |
+## 🔗 Интеграция
 
-### Как это работает:
+На основном сайте просто добавьте ссылку:
+```html
+<a href="https://blog.dentalprice.ai">Blog</a>
+```
 
-1. При создании поста добавьте tag `#dentalprice`
-2. Next.js сайт фильтрует: `filter: 'tag:hash-dentalprice'`
-3. Только эти посты появятся на dentalprice.ai/blog
-
-## 🔑 Получение API Keys
-
-После деплоя:
-1. Откройте `https://blog.dentalprice.ai/ghost`
-2. Settings → Integrations → Add custom integration
-3. Name: "Multi-Site API"
-4. Скопируйте **Content API Key**
-
-## 🔧 Environment Variables для Render
-
-Автоматически настраиваются из render.yaml:
-- PostgreSQL база данных
-- URL: blog.dentalprice.ai
-- Email и Storage (опционально)
-
-## 📊 Мониторинг
-
-- Health check: `/ghost/api/admin/site/`
-- Admin panel: `/ghost`
-- Content API: `/ghost/api/content/`
-
-## 🚦 Checklist деплоя
-
-- [ ] GitHub repo создан
-- [ ] Подключен к Render
-- [ ] База данных создана
-- [ ] Домен настроен
-- [ ] SSL активен
-- [ ] Admin аккаунт создан
-- [ ] API key получен
-- [ ] Internal теги созданы
-
-## 📚 Документация
-
-- Основная документация: [../README_MULTISITE.md](../README_MULTISITE.md)
-- Интеграция Next.js: [../ghost-multisite-setup/](../ghost-multisite-setup/)
-- Ghost Docs: https://ghost.org/docs/
+---
+Простое решение - отдельный блог на поддомене!
