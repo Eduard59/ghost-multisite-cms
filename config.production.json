@@ -21,7 +21,7 @@
         "pass": "yFBJKnVS8Arw"
       }
     },
-    "from": "'DentalPrice AI' <noreply@dentalprice.ai>"
+    "from": "noreply@dentalprice.ai"
   },
   "logging": {
     "transports": ["stdout"]
