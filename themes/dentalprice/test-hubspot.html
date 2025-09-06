@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HubSpot Form Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-2xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-center">HubSpot Form Test</h1>
+        
+        <!-- Test 1: Direct HubSpot Form -->
+        <div class="bg-white p-6 rounded-lg shadow mb-8">
+            <h2 class="text-xl font-semibold mb-4">Test 1: Direct HubSpot Form</h2>
+            <div id="hubspot-form-test1"></div>
+            <div id="loading-1" class="text-center py-4">
+                <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                <p class="mt-2 text-gray-600">Loading HubSpot form...</p>
+            </div>
+        </div>
+        
+        <!-- Test 2: Form with Error Handling -->
+        <div class="bg-white p-6 rounded-lg shadow mb-8">
+            <h2 class="text-xl font-semibold mb-4">Test 2: Form with Error Handling</h2>
+            <div id="hubspot-form-test2"></div>
+            <div id="loading-2" class="text-center py-4">
+                <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                <p class="mt-2 text-gray-600">Loading form with error handling...</p>
+            </div>
+            <div id="error-message-2" class="hidden text-red-600 text-center py-4">
+                <p>❌ HubSpot form failed to load. Please check your network connection and form configuration.</p>
+            </div>
+        </div>
+        
+        <!-- Test 3: Fallback Form -->
+        <div class="bg-white p-6 rounded-lg shadow mb-8">
+            <h2 class="text-xl font-semibold mb-4">Test 3: Fallback Form (always shown)</h2>
+            <form id="fallback-form-test" class="space-y-4">
+                <div>
+                    <label for="test-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="test-email" required 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <button type="submit" 
+                        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors">
+                    Download PDF Study (Test)
+                </button>
+            </form>
+            <div id="fallback-success-test" class="hidden text-center py-4">
+                <div class="text-green-600 mb-2">✓ Fallback form working!</div>
+                <p class="text-sm text-gray-600">This confirms the fallback mechanism works.</p>
+            </div>
+        </div>
+        
+        <!-- Debug Information -->
+        <div class="bg-gray-50 p-6 rounded-lg">
+            <h2 class="text-xl font-semibold mb-4">Debug Information</h2>
+            <div id="debug-info" class="text-sm text-gray-600 space-y-2">
+                <p><strong>HubSpot Script Status:</strong> <span id="script-status">Checking...</span></p>
+                <p><strong>Portal ID:</strong> 26874015</p>
+                <p><strong>Form ID:</strong> 5c1bfe1f-5d33-4d30-ad1c-b14bb6bb4bc3</p>
+                <p><strong>Script URL:</strong> //js.hsforms.net/forms/v2.js</p>
+                <div id="console-logs" class="mt-4">
+                    <strong>Console Logs:</strong>
+                    <div id="log-container" class="bg-black text-green-400 p-3 rounded text-xs mt-2 min-h-[100px] overflow-y-auto">
+                        <!-- Logs will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HubSpot Forms Script -->
+    <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
+    
+    <script>
+        // Console log capture
+        const logContainer = document.getElementById('log-container');
+        const originalLog = console.log;
+        const originalError = console.error;
+        
+        function addLogMessage(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = type === 'error' ? 'text-red-400' : 'text-green-400';
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addLogMessage(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addLogMessage('ERROR: ' + args.join(' '), 'error');
+        };
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, starting HubSpot form tests...');
+            
+            // Check if HubSpot script loaded
+            setTimeout(function() {
+                const scriptStatus = document.getElementById('script-status');
+                if (typeof hbspt !== 'undefined') {
+                    scriptStatus.textContent = '✓ Loaded successfully';
+                    scriptStatus.className = 'text-green-600 font-semibold';
+                    console.log('HubSpot script loaded successfully');
+                } else {
+                    scriptStatus.textContent = '❌ Failed to load';
+                    scriptStatus.className = 'text-red-600 font-semibold';
+                    console.error('HubSpot script failed to load');
+                }
+            }, 2000);
+            
+            // Test 1: Direct form load
+            setTimeout(function() {
+                console.log('Starting Test 1: Direct HubSpot form load');
+                try {
+                    if (typeof hbspt !== 'undefined') {
+                        hbspt.forms.create({
+                            region: "na1",
+                            portalId: "26874015",
+                            formId: "5c1bfe1f-5d33-4d30-ad1c-b14bb6bb4bc3",
+                            target: "#hubspot-form-test1",
+                            onFormReady: function() {
+                                console.log('Test 1: Form ready');
+                                document.getElementById('loading-1').style.display = 'none';
+                            },
+                            onFormSubmit: function() {
+                                console.log('Test 1: Form submitted');
+                            }
+                        });
+                    } else {
+                        console.error('Test 1: HubSpot not available');
+                        document.getElementById('loading-1').innerHTML = '<p class="text-red-600">❌ HubSpot script not loaded</p>';
+                    }
+                } catch (error) {
+                    console.error('Test 1: Error creating form:', error);
+                    document.getElementById('loading-1').innerHTML = '<p class="text-red-600">❌ Error: ' + error.message + '</p>';
+                }
+            }, 3000);
+            
+            // Test 2: Form with error handling
+            setTimeout(function() {
+                console.log('Starting Test 2: Form with error handling');
+                const timeout = setTimeout(function() {
+                    console.log('Test 2: Timeout reached, showing error');
+                    document.getElementById('loading-2').style.display = 'none';
+                    document.getElementById('error-message-2').classList.remove('hidden');
+                }, 10000);
+                
+                try {
+                    if (typeof hbspt !== 'undefined') {
+                        hbspt.forms.create({
+                            region: "na1",
+                            portalId: "26874015",
+                            formId: "5c1bfe1f-5d33-4d30-ad1c-b14bb6bb4bc3",
+                            target: "#hubspot-form-test2",
+                            onFormReady: function() {
+                                console.log('Test 2: Form ready');
+                                clearTimeout(timeout);
+                                document.getElementById('loading-2').style.display = 'none';
+                            },
+                            onFormSubmit: function() {
+                                console.log('Test 2: Form submitted');
+                            }
+                        });
+                    } else {
+                        console.error('Test 2: HubSpot not available');
+                        clearTimeout(timeout);
+                        document.getElementById('loading-2').style.display = 'none';
+                        document.getElementById('error-message-2').classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Test 2: Error creating form:', error);
+                    clearTimeout(timeout);
+                    document.getElementById('loading-2').style.display = 'none';
+                    document.getElementById('error-message-2').classList.remove('hidden');
+                }
+            }, 4000);
+            
+            // Test 3: Fallback form handler
+            document.getElementById('fallback-form-test').addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Test 3: Fallback form submitted');
+                this.style.display = 'none';
+                document.getElementById('fallback-success-test').classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

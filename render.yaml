@@ -18,7 +18,7 @@ services:
       - key: database__connection__filename
         value: /var/lib/ghost/content/data/ghost.db
       
-      # Email configuration (Zoho SMTP)
+      # Email configuration (Zoho SMTP для админки)
       - key: mail__transport
         value: SMTP
       
@@ -38,9 +38,28 @@ services:
         value: yFBJKnVS8Arw
       
       - key: mail__from
-        value: '"DentalPrice" <noreply@dentalprice.ai>'
+        value: noreply@dentalprice.ai
+      
+      # Members email configuration (SendGrid для подписчиков)
+      - key: members__email__transport
+        value: SMTP
+      
+      - key: members__email__options__host
+        value: smtp.sendgrid.net
+      
+      - key: members__email__options__port
+        value: 587
+      
+      - key: members__email__options__auth__user
+        value: apikey
+      
+      - key: members__email__options__auth__pass
+        sync: false  # Add SendGrid API key manually in Render Dashboard
       
       - key: members__emailFromAddress
+        value: noreply@dentalprice.ai
+      
+      - key: members__email__from
         value: noreply@dentalprice.ai
     
     disk:
