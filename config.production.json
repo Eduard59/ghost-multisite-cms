@@ -19,9 +19,16 @@
       "auth": {
         "user": "noreply@dentalprice.ai",
         "pass": "yFBJKnVS8Arw"
+      },
+      "requireTLS": true,
+      "tls": {
+        "rejectUnauthorized": false
       }
     },
-    "from": "noreply@dentalprice.ai"
+    "from": "\"DentalPrice\" <noreply@dentalprice.ai>"
+  },
+  "members": {
+    "emailFromAddress": "noreply@dentalprice.ai"
   },
   "logging": {
     "transports": ["stdout"]

@@ -38,7 +38,10 @@ services:
         value: yFBJKnVS8Arw
       
       - key: mail__from
-        value: DentalPrice AI <noreply@dentalprice.ai>
+        value: '"DentalPrice" <noreply@dentalprice.ai>'
+      
+      - key: members__emailFromAddress
+        value: noreply@dentalprice.ai
     
     disk:
       name: ghost-storage
